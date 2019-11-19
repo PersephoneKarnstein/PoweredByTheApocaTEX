@@ -1,0 +1,145 @@
+\documentclass[letterpaper,10pt,twoside,openany]{book}
+
+\usepackage[english]{babel}
+%usepackage[italian]{babel}
+
+\usepackage[utf8]{inputenc}
+\usepackage[export]{adjustbox}
+\usepackage{xcolor}
+\usepackage{hang}
+\usepackage{lipsum}
+\usepackage{listings}
+\usepackage[draft]{flowfram}
+\usepackage{multicol}
+\usepackage{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{starfont} %use this one because it has a bolder \square than asysym
+\renewcommand*\familydefault{\sfdefault}
+
+\definecolor{veil-red}{HTML}{D2232A}
+
+\newcommand\linespace[1]{\linespread{#1}\selectfont}
+\setlength\lineskiplimit{-1000pt}
+
+\geometry
+      {
+        hmargin   = .125in, % Left and right margins
+        top       = .5in, % Top of text area to top of page
+        bottom    = .8in,  % Bottom of text area to bottom of page
+        footskip  = .32in, % Bottom of text area to bottom of footer text
+        columnsep = .33in, % Space between columns
+      }
+
+%\lstset{%
+%  basicstyle=\ttfamily,
+%  language=[LaTeX]{TeX},
+%}
+
+\usepackage{tikz}
+\usepackage{graphicx}
+
+\newif\ifdeveloppath
+\tikzset{/tikz/develop clipping path/.is if=developpath,
+  /tikz/develop clipping path=true}
+
+\newcommand{\clippicture}[2]{
+  \begin{tikzpicture}
+% Include the image to determine the size and set up the relative coordinate system. Enclose the \includegraphics in \phantom{} once the clipping path has been set up
+\ifdeveloppath
+  \node[anchor=south west,inner sep=0] (image) at (0,0) {\includegraphics#1};
+\else
+  \node[anchor=south west,inner sep=0] (image) at (0,0) {\phantom{\includegraphics#1}};
+\fi
+\pgfresetboundingbox
+\begin{scope}[x={(image.south east)},y={(image.north west)}]
+  % Draw grid while developing clipping path
+  \ifdeveloppath
+    \draw[help lines,xstep=.1,ystep=.1] (0,0) grid (1,1);
+    \foreach \x in {0,1,...,9} { \node [anchor=north] at (\x/10,0) {0.\x}; }
+    \foreach \y in {0,1,...,9} { \node [anchor=east] at (0,\y/10) {0.\y}; }
+    \draw[red, ultra thick] #2 -- cycle;
+  \else
+    % Use the path to clip, include the image
+    \path[clip] #2 -- cycle;
+    \node[anchor=south west,inner sep=0pt] {\includegraphics#1};
+    \draw[veil-red, line width=5mm] #2 -- cycle;
+  \fi
+\end{scope}
+\end{tikzpicture}
+}
+
+%\setallstaticframes{valign=t}
+
+\newcommand*{\myfont}{\fontfamily{ugq}\selectfont}
+\DeclareTextFontCommand{\sectionhead}{\myfont}
+\newcommand{\archetype}[1]{\textcolor{veil-red}{\sectionhead{\uppercase{\Huge{#1}}\newline\newline}}}
+
+\newcommand{\attribute}[1]{\newline\textcolor{veil-red}
+{\sectionhead{\uppercase{\Large{#1}}\newline
+\raisebox{1em}{\rule{\textwidth}{0.8mm}}
+}}}
+
+\newstaticframe[odd]{.3333\textwidth}{\textheight}{0pt}{0pt}[1]
+\newstaticframe[odd]{0.64\textwidth}{\textheight}{0.36\textwidth}{0pt}[2]
+
+\newcommand{\tikzsquare}[1]{\begin{tikzpicture}[scale=#1]
+\draw (0,0) -- (4,0) -- (4,4) -- (0,4) -- cycle;
+\end{tikzpicture}}
+
+\newcommand{\emotion}[1]{
+\begin{minipage}{5em}
+\linespace{0.4}
+{\textcolor{veil-red}{\sectionhead{\uppercase{\normalsize{\hspace*{-2.6mm}#1}}\newline}}}
+\raisebox{0in}{\hspace*{-1em}
+\tikzsquare{0.5}}
+\raisebox{-2mm}{
+\begin{center}
+\hspace*{-3.5mm}\tikzsquare{0.075}\hspace{1.04mm}\tikzsquare{0.075}\hspace{1.04mm}\tikzsquare{0.075}\hspace{1.04mm}\tikzsquare{0.075}\hspace{1.04mm}\tikzsquare{0.075}
+\end{center}}
+\end{minipage}
+\linespace{1}
+%\hspace{-0.5em}
+}
+
+\newcommand{\stateboxes}{
+\emotion{Mad}
+\emotion{Peaceful}
+\emotion{Sad}
+\emotion{Joyful}
+\emotion{Scared}
+\emotion{Powerful}}
+
+% Start document
+\begin{document}
+\setstaticframe{1,2}{valign=t}
+\begin{staticcontents*}{1}
+{
+\tikzset{develop clipping path=false}
+\clippicture{[width=\textwidth]{kitty2.jpg}}{(0.1,0.0) -- (0.0, 0.1) -- (0.0, 0.9) -- (0.1,1.0) -- (0.9, 1.0) -- (1.0, 0.9) -- (1.0, 0.1) -- (0.9, 0.0)}
+
+\lipsum[1]
+}
+\end{staticcontents*}
+
+
+\begin{staticcontents*}{2}
+{
+\archetype{The Kitteh}
+\attribute{Name:}
+\attribute{Look:}
+Circle one from each category
+is a llama
+\attribute{Jam:}
+\lipsum[20]
+\attribute{States}
+\stateboxes
+
+
+\vfill
+
+}
+\end{staticcontents*}
+
+
+\phantom{test}
+\end{document}
