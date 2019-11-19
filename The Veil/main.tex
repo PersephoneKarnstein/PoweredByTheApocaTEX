@@ -13,7 +13,10 @@
 \usepackage{multicol}
 \usepackage{geometry}
 \usepackage[T1]{fontenc}
-\usepackage{starfont} %use this one because it has a bolder \square than asysym
+\usepackage{marvosym} %use this one because it has a bolder \Squarepipe than amsymb
+\usepackage{MnSymbol} %need the filled square for the bulleted lists
+\usepackage{tcolorbox}
+
 \renewcommand*\familydefault{\sfdefault}
 
 \definecolor{veil-red}{HTML}{D2232A}
@@ -24,8 +27,8 @@
 \geometry
       {
         hmargin   = .125in, % Left and right margins
-        top       = .5in, % Top of text area to top of page
-        bottom    = .8in,  % Bottom of text area to bottom of page
+        top       = .25in, % Top of text area to top of page
+        bottom    = .125in,  % Bottom of text area to bottom of page
         footskip  = .32in, % Bottom of text area to bottom of footer text
         columnsep = .33in, % Space between columns
       }
@@ -34,6 +37,11 @@
 %  basicstyle=\ttfamily,
 %  language=[LaTeX]{TeX},
 %}
+
+\usepackage{enumitem}
+\setlist[itemize]{label=\filledmedsquare, nosep, leftmargin=1em}
+%\renewcommand\labelitemi{\filledmedsquare}
+
 
 \usepackage{tikz}
 \usepackage{graphicx}
@@ -68,6 +76,12 @@
 \end{tikzpicture}
 }
 
+\newcommand{\udensdot}[1]{%
+    \tikz[baseline=(todotted.base)]{
+        \node[inner sep=1pt,outer sep=0pt] (todotted) {#1};
+        \draw[densely dotted] (todotted.south west) -- (\linewidth-\pgflinewidth-0.5em,0);
+    }%
+}%
 %\setallstaticframes{valign=t}
 
 \newcommand*{\myfont}{\fontfamily{ugq}\selectfont}
@@ -117,7 +131,34 @@
 \tikzset{develop clipping path=false}
 \clippicture{[width=\textwidth]{kitty2.jpg}}{(0.1,0.0) -- (0.0, 0.1) -- (0.0, 0.9) -- (0.1,1.0) -- (0.9, 1.0) -- (1.0, 0.9) -- (1.0, 0.1) -- (0.9, 0.0)}
 
-\lipsum[1]
+\textcolor{veil-red}{\textbf{\uppercase{The Kitteh} is shrouded in questions. It doesn’t know how it came into the world and does not have a clear picture of humanity. As a newly awakened life form, it struggles to understand its own emotions. Possessing an artificial intelligence, it needs to acquire more information to find its place in the world and unravel the mystery of its existence -- were they built to uplift, emulate or
+destroy humanity?}}
+\bigskip
+\begin{tcolorbox}[colframe=veil-red,colback=white,arc=0mm]
+\textbf{\uppercase{Hold}}\\
+\newline
+\end{tcolorbox}
+\bigskip
+\begin{tcolorbox}[colframe=veil-red,colback=white,arc=0mm]
+\textbf{\uppercase{Harm}}\\
+\Squarepipe {} Light {} \Circpipe\Circpipe\Circpipe {} Armor\\
+\Squarepipe\Squarepipe {} Moderate\\
+\Squarepipe\Squarepipe {} Critical\\
+\newline
+\udensdot{}\\
+\newline
+\udensdot{}\\
+\newline
+\udensdot{}\\
+\newline
+\udensdot{}\\
+\newline
+\udensdot{}\\
+\newline
+\udensdot{}\\
+\newline
+\udensdot{}\\
+\end{tcolorbox}
 }
 \end{staticcontents*}
 
@@ -127,14 +168,65 @@
 \archetype{The Kitteh}
 \attribute{Name:}
 \attribute{Look:}
-Circle one from each category
-is a llama
+\textcolor{veil-red}{\textbf{Circle one from each category:}}\\
+\begin{itemize}
+    \item Femme, Masculine, Androgynous, Animalistic, Transgressing, Esoteric, Fluid, Mechanical.
+    \item Bulky Wear, Improvised Wear, Scrounged Wear, Utility Wear, Discreet Wear, Or Innovative Wear.
+    \item Weathered Face, Strong Face, Rugged Face, Narrow Face, Or Busted Face.
+    \item Mechanical Eyes, Hard Eyes, Blank Eyes, Merciless Eyes, Dead Eyes, Or Calculating Eyes.
+    \item Huge Body, Muscular Body, Tall Gangly Body, Wiry Body, Or a \rule{1cm}{0.15mm} Body
+    \item Asian Or South Asian, Black, Caucasian, Hispanic/Latino, Indigenous, Middle Eastern, \rule{1cm}{0.15mm}
+    
+\end{itemize}
+\bigskip
 \attribute{Jam:}
-\lipsum[20]
+Everyone has a Jam (something you are good at and do to making a living and earn Creds). When you tell the MC what your jam is they’ll tell you how much Cred you earn when you get downtime. Your Jam is used to establish your lifestyle, your income, and how you know certain other characters.\\
+\newline
 \attribute{States}
 \stateboxes
+\bigskip
 
+Assign +2,+1,+1,0,0 and -1 to each state from their propensity to react with that emotion
+to their most foreign one.\\
 
+At the start of play you only have 1 state unlocked. Others may be unlocked using the rise move.\\
+\attribute{Beliefs}
+Create three Beliefs. If a Belief is tested this session, mark 1 XP at the end of the session. If a Belief gets you into trouble this session, mark 2 XP at the end of the session. If a Belief is erased and resolved or changed after being tested, mark 3 XP.\\
+
+\udensdot{1.}\\
+
+\udensdot{2.}\\
+
+\udensdot{3.}\\
+
+\attribute{Improvement \hfill XP:\Squarepipe\Squarepipe\Squarepipe\Squarepipe}
+When you attempt something that benefits you and fail or when you gain XP from beliefs mark each box per 1XP you accrue:
+\begin{multicols}{3}
++1 Mad \Squarepipe\\
++1 Joyful \Squarepipe\\
+\vfill\null
+\columnbreak
++1 Sad \Squarepipe\\
++1 Peaceful \Squarepipe\\
+\vfill\null
+\columnbreak
++1 Scared \Squarepipe\\
++1 Powerful \Squarepipe\\
+\end{multicols}
+\vspace{-3em}
+Get a new playbook move \Squarepipe\Squarepipe\\
+Erase a Giri owed \Squarepipe\Squarepipe\Squarepipe\\
+Get a move from another playbook \Squarepipe\Squarepipe\Squarepipe\\
+After your 5th improvement you may also pick from the following:
+\begin{multicols*}{2}
+Take +1 to any state (Max +3) \Squarepipe\Squarepipe\Squarepipe\Squarepipe\Squarepipe\\
+Create and play a new protagonist \Squarepipe\\
+Advance a basic move \Squarepipe\Squarepipe\Squarepipe\Squarepipe\Squarepipe\Squarepipe\Squarepipe\\
+\vfill\null
+\columnbreak
+Get another option from the “within” section \Squarepipe\\
+Change to a new playbook \Squarepipe\\
+\end{multicols*}
 \vfill
 
 }
